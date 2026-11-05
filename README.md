@@ -21,3 +21,9 @@ npm run build
 ```
 
 The production site is exported to `out/` for static hosting. The form includes native validation and a demo confirmation. It does not transmit or store submissions. Google Fonts are optional, with system font fallbacks.
+
+## Vercel deployment
+
+Import this repository with the repository root as the Root Directory (leave it blank). The tracked `vercel.json` sets the Next.js framework, installs dependencies with `npm ci`, builds with `npm run build`, and serves the static `out/` directory.
+
+Deploy the `main` branch. If a previous deployment returned Vercel's `NOT_FOUND` page, deploy the latest commit so the configuration takes effect. Confirm the production domain is assigned to that deployment.
