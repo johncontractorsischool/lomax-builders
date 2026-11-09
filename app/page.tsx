@@ -319,8 +319,7 @@ export default function Home() {
                 type="submit"
                 disabled={sending}
               >
-                {sending ? "Submitting…" : "Submit"}{" "}
-                <Arrow />
+                {sending ? "Submitting…" : "Submit"}
               </button>
               <p className="form-footnote">
                 <svg

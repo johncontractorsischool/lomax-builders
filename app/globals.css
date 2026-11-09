@@ -488,6 +488,13 @@ textarea {
     background 0.2s,
     transform 0.2s;
 }
+.submit-button[type="submit"] {
+  justify-content: center;
+  min-height: 56px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
 .submit-button:hover {
   background: #35422c;
   transform: translateY(-1px);
