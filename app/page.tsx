@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { projectTypes, timelines, referrals } from "../lib/inquiry";
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
@@ -73,26 +74,14 @@ export default function Home() {
       <div className="background-shade" aria-hidden="true" />
       <header className="site-header">
         <a href="#" className="wordmark" aria-label="Lomax Builders home">
-          <svg
-            className="brand-icon"
-            viewBox="0 0 42 46"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M4 40V16L21 5l17 11v24H4Z"
-              stroke="currentColor"
-              strokeWidth="1.4"
-            />
-            <path
-              d="M13 18v14h16M21 5v13M4 40l9-8m25 8-9-8"
-              stroke="currentColor"
-              strokeWidth="1.4"
-            />
-          </svg>
-          <span className="brand-text">
-            LOMAX<span>BUILDERS</span>
-          </span>
+          <Image
+            className="brand-logo"
+            src="/images/lomax-logo-white.png"
+            alt="Lomax Builders"
+            width={800}
+            height={350}
+            loading="eager"
+          />
         </a>
         <span className="header-note">
           Thoughtfully built. Beautifully yours.
