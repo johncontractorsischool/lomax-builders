@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "test": "tsx --test tests/contact.test.ts",
     "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
     "start": "next start",
@@ -10,13 +11,16 @@
   },
   "dependencies": {
     "next": "^16.0.0",
+    "nodemailer": "^10.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.0"
   }
 }

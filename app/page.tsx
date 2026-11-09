@@ -1,12 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-
-const projectTypes = [
-  "New Home Construction",
-  "Home Renovation / Remodel",
-  "Home Addition",
-];
+import { projectTypes, timelines, referrals } from "../lib/inquiry";
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
@@ -30,11 +25,46 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 
 export default function Home() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+  const sendingRef = useRef(false);
   const confirmationRef = useRef<HTMLDivElement>(null);
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
-    requestAnimationFrame(() => confirmationRef.current?.focus());
+    if (sendingRef.current) return;
+    sendingRef.current = true;
+    setSending(true);
+    setError("");
+    const formData = new FormData(event.currentTarget);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...Object.fromEntries(formData),
+          newsletter: formData.get("newsletter") === "on",
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result.error || "We couldn’t send your inquiry. Please try again.",
+        );
+      }
+      setSubmitted(true);
+      requestAnimationFrame(() => confirmationRef.current?.focus());
+    } catch (error) {
+      setError(
+        error instanceof Error &&
+          !(error instanceof TypeError) &&
+          !(error instanceof SyntaxError)
+          ? error.message
+          : "We couldn’t confirm your submission. Please check your connection or email info@lomaxbuilders.com.",
+      );
+    } finally {
+      sendingRef.current = false;
+      setSending(false);
+    }
   }
 
   return (
@@ -135,8 +165,8 @@ export default function Home() {
               </span>
               <h3>Your vision is taking shape.</h3>
               <p>
-                This is a front-end preview. Your form has been completed, but
-                your details haven’t been sent or saved.
+                Thank you for sharing your plans. Your inquiry has been sent to
+                the Lomax Builders team. We look forward to connecting with you.
               </p>
               <button
                 className="submit-button"
@@ -147,7 +177,16 @@ export default function Home() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} aria-busy={sending}>
+              <div className="form-honeypot" aria-hidden="true">
+                <label htmlFor="website">Leave this field empty</label>
+                <input
+                  id="website"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
               <div className="required-note">
                 <span>*</span> Required fields
               </div>
@@ -232,11 +271,9 @@ export default function Home() {
                       <option value="" disabled>
                         Select a timeline
                       </option>
-                      <option>As soon as possible</option>
-                      <option>Within 3–6 months</option>
-                      <option>Within 6–12 months</option>
-                      <option>More than a year</option>
-                      <option>Just exploring</option>
+                      {timelines.map((timeline) => (
+                        <option key={timeline}>{timeline}</option>
+                      ))}
                     </select>
                     <span className="select-chevron" />
                   </div>
@@ -264,12 +301,9 @@ export default function Home() {
                     <option value="" disabled>
                       Select an option
                     </option>
-                    <option>Friends or family</option>
-                    <option>Online search</option>
-                    <option>Social media</option>
-                    <option>Architect or designer</option>
-                    <option>Saw one of your projects</option>
-                    <option>Other</option>
+                    {referrals.map((referral) => (
+                      <option key={referral}>{referral}</option>
+                    ))}
                   </select>
                   <span className="select-chevron" />
                 </div>
@@ -286,8 +320,20 @@ export default function Home() {
                   maxLength={5000}
                 />
               </div>
-              <button className="submit-button" type="submit">
-                Let’s start the conversation <Arrow />
+              {error && (
+                <p className="form-error" role="alert">
+                  {error}
+                </p>
+              )}
+              <button
+                className="submit-button"
+                type="submit"
+                disabled={sending}
+              >
+                {sending
+                  ? "Sending your inquiry…"
+                  : "Let’s start the conversation"}{" "}
+                <Arrow />
               </button>
               <p className="form-footnote">
                 <svg
@@ -310,7 +356,7 @@ export default function Home() {
                     stroke="currentColor"
                   />
                 </svg>{" "}
-                Front-end preview · Your details won’t be sent.
+                Your inquiry goes directly to the Lomax Builders team.
               </p>
             </form>
           )}

@@ -8,6 +8,31 @@
   --border: #d8d9ce;
   --body-font: "DM Sans", Arial, sans-serif;
 }
+
+.form-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.form-error {
+  padding: 12px;
+  border: 1px solid #d4b4a8;
+  border-radius: 3px;
+  background: #faf0e9;
+  color: #813c2a;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.submit-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+}
 * {
   box-sizing: border-box;
 }

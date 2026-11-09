@@ -1,6 +1,6 @@
 # Lomax Builders
 
-A responsive, front-end-only Next.js website using the supplied house rendering.
+A responsive Next.js website using the supplied house rendering, with a server-side email handler for project inquiries.
 
 ## Local development
 
@@ -17,10 +17,27 @@ Open http://localhost:3000.
 
 ```sh
 npm run typecheck
+npm test
 npm run build
 ```
 
-The production build is generated in `.next/`. Run it locally with `npm start`. The homepage is prerendered, and the form includes native validation and a demo confirmation. It does not transmit or store submissions. Google Fonts are optional, with system font fallbacks.
+The production build is generated in `.next/`. Run it locally with `npm start`. The homepage is prerendered. Google Fonts are optional, with system font fallbacks.
+
+## Form email configuration
+
+Add these server-only variables in [Vercel environment settings](https://vercel.com/contractor-intelligence-school/lomax-builders/settings/environment-variables) for Production, then redeploy to apply them:
+
+| Variable           | Value                                    |
+| ------------------ | ---------------------------------------- |
+| `SMTP_USER`        | `leo@contractorsischool.com`             |
+| `SMTP_PASSWORD`    | The Google app password for that account |
+| `CONTACT_TO_EMAIL` | `info@lomaxbuilders.com`                 |
+
+For local development, copy `.env.example` to `.env.local` and fill in the password. Never commit `.env.local` or use a `NEXT_PUBLIC_` prefix for these values. Gmail SMTP uses TLS on port 465. Spaces in a copied app password are removed automatically.
+
+`POST /api/contact` validates the fields and sends the full inquiry to the configured recipient. The visitor's email becomes Reply-To; the authenticated account is always the sender. Newsletter consent is included in the email but does not subscribe the visitor to a mailing platform. No database is used. Success means SMTP accepted the message, not that inbox delivery has been independently verified.
+
+The handler limits body size, rejects cross-origin browser requests and a hidden honeypot field, and applies a best-effort per-instance IP throttle. The throttle is not shared across Vercel instances; configure Vercel Firewall rules if stronger abuse protection is needed. Tests mock SMTP and do not send real email.
 
 ## Vercel deployment
 
