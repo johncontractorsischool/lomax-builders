@@ -524,10 +524,17 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   padding: 23px 0;
   color: #e4e9daaf;
   font-size: 9px;
   letter-spacing: 0.3px;
+}
+.footer-license {
+  color: #fffdf4;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
 }
 .confirmation {
   padding: 48px 0 40px;
@@ -805,6 +812,13 @@ textarea {
     max-width: 540px;
     padding: 24px 0 27px;
     font-size: 9px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-license {
+    order: -1;
+    flex-basis: 100%;
+    text-align: center;
   }
   h2 {
     font-size: 31px;

@@ -364,6 +364,7 @@ export default function Home() {
       </div>
       <footer className="site-footer">
         <span>© {new Date().getFullYear()} Lomax Builders</span>
+        <span className="footer-license">Contractor License #1163296</span>
         <span>Built around you.</span>
       </footer>
     </main>
