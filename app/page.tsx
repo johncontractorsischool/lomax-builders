@@ -330,9 +330,7 @@ export default function Home() {
                 type="submit"
                 disabled={sending}
               >
-                {sending
-                  ? "Sending your inquiry…"
-                  : "Let’s start the conversation"}{" "}
+                {sending ? "Submitting…" : "Submit"}{" "}
                 <Arrow />
               </button>
               <p className="form-footnote">
