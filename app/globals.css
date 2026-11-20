@@ -109,7 +109,7 @@ button {
     );
 }
 .site-header {
-  height: 114px;
+  height: 156px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -575,7 +575,7 @@ textarea {
   .site-header {
     max-width: 1550px;
     margin: auto;
-    height: 132px;
+    height: 156px;
   }
   .field {
     margin-bottom: 20px;
@@ -661,7 +661,7 @@ textarea {
     padding: 0 24px;
   }
   .site-header {
-    height: 94px;
+    height: 120px;
   }
   .brand-logo {
     width: 160px;

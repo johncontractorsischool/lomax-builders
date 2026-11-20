@@ -76,10 +76,10 @@ export default function Home() {
         <a href="#" className="wordmark" aria-label="Lomax Builders home">
           <Image
             className="brand-logo"
-            src="/images/lomax-logo-white.png"
+            src="/images/lomax-logo-light-grey.png"
             alt="Lomax Builders"
-            width={800}
-            height={350}
+            width={3915}
+            height={2375}
             loading="eager"
           />
         </a>
